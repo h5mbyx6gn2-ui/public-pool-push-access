@@ -19,8 +19,9 @@ WORKDIR /build
 
 COPY . .
 
-# Build Public Pool using NPM
-RUN npm i && npm run build
+# Install dependencies only (skip frontend build)
+RUN npm i
+# RUN npm run build
 
 ############################
 # Docker final environment #
@@ -35,6 +36,5 @@ WORKDIR /public-pool
 
 # Copy built binaries into the final image
 COPY --from=build /build .
-#COPY .env.example .env
 
 CMD ["/usr/local/bin/node", "dist/main"]
