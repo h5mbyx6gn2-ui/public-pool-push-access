@@ -19,9 +19,9 @@ WORKDIR /build
 
 COPY . .
 
-# Install dependencies only (skip frontend build)
+# Install dependencies and build TypeScript
 RUN npm i
-# RUN npm run build
+RUN npm run build
 
 ############################
 # Docker final environment #

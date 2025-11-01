@@ -1,6 +1,22 @@
 version: '3.8'
 
 services:
+  bitcoin-regtest:
+    container_name: bitcoin-regtest
+    image: bitcoin-knots-arm
+    command: bitcoind -regtest -printtoconsole -rpcallowip=0.0.0.0/0 -rpcbind=0.0.0.0
+    ports:
+      - "18443:18443"
+      - "18444:18444"
+
+  public-pool-regtest:
+    container_name: public-pool-regtest
+    image: bitcoin-knots-arm
+    command: bitcoind -regtest -printtoconsole -rpcallowip=0.0.0.0/0 -rpcbind=0.0.0.0
+    ports:
+      - "18445:18445"
+      - "18446:18446"
+
   public-pool:
     container_name: public-pool
     build:
@@ -17,3 +33,6 @@ services:
       - "./.env:/public-pool/.env:ro"
     environment:
       - NODE_ENV=production
+    depends_on:
+      - bitcoin-regtest
+      - public-pool-regtest
