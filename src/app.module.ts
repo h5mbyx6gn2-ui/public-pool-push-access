@@ -4,6 +4,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { StatsController } from './controllers/stats.controller';
+import { StatsService } from './services/stats.service';
 
 import { AppController } from './app.controller';
 import { AddressController } from './controllers/address/address.controller';
@@ -60,6 +62,7 @@ const ORMModules = [
         AppController,
         ClientController,
         AddressController,
+        StatsController,
         ExternalShareController
     ],
     providers: [
@@ -72,6 +75,7 @@ const ORMModules = [
         BitcoinAddressValidator,
         StratumV1JobsService,
         BTCPayService,
+        StatsService,
         BraiinsService,
         ExternalSharesService,
     ],
