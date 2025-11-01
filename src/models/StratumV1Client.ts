@@ -4,6 +4,7 @@ import { MiningJob } from './MiningJob';
 import { PayoutInformation } from './PayoutInformation';
 import * as bitcoin from 'bitcoinjs-lib';
 import { NotificationService } from '../services/notification.service';
+import { Block } from 'bitcoinjs-lib';
 
 export class StratumV1Client {
   private configService: ConfigService;
@@ -54,8 +55,8 @@ export class StratumV1Client {
     await this.notificationService.notifySubscribersBlockFound(
       this.clientAuthorization.address,
       jobTemplate.block.height,
-      realTemplate.block,
-      success
+      realTemplate.block as unknown as Block,
+      success ? 'true' : 'false'
     );
   }
 

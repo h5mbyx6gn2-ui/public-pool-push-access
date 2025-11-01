@@ -30,14 +30,14 @@ export class MiningJob {
     const padding = Uint8Array.from(Buffer.alloc(10, 0x00));
 
     const scriptSig = Uint8Array.from(Buffer.concat([
-      Buffer.from(blockHeightLengthByte),
-      Buffer.from(blockHeightEncoded),
-      Buffer.from(extra),
-      Buffer.from(padding)
+      Buffer.from(blockHeightLengthByte) as unknown as Uint8Array,
+      Buffer.from(blockHeightEncoded) as unknown as Uint8Array,
+      Buffer.from(extra) as unknown as Uint8Array,
+      Buffer.from(padding) as unknown as Uint8Array
     ]));
 
     this.coinbaseTransaction.addInput(Buffer.alloc(32), 0xffffffff);
-    this.coinbaseTransaction.ins[0].script = scriptSig;
+    this.coinbaseTransaction.ins[0].script = scriptSig as unknown as Buffer;
 
     const segwitMagicBits = Uint8Array.from(Buffer.from([0xaa, 0x21, 0xa9, 0xed]));
     const witnessCommit = Uint8Array.from(Buffer.from(jobTemplate.block.witnessCommit));
@@ -45,10 +45,10 @@ export class MiningJob {
     this.coinbaseTransaction.addOutput(
       script.compile([
         opcodes.OP_RETURN,
-        Uint8Array.from(Buffer.concat([
-          Buffer.from(segwitMagicBits),
-          Buffer.from(witnessCommit)
-        ]))
+        Buffer.concat([
+          Uint8Array.from(segwitMagicBits),
+          Uint8Array.from(witnessCommit)
+        ]) as unknown as Buffer
       ]),
       0
     );
